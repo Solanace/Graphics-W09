@@ -20,7 +20,16 @@
   Color should be set differently for each polygon.
   ====================*/
 void scanline_convert( struct matrix *points, int i, screen s, zbuffer zb ) {
-
+	// Assuming entire polygon matrix was carried over
+	// Step 1: Sort top, middle, bottom
+	if (polygons->lastcol < 3) {
+		printf("Need at least 3 points to draw a polygon!\n");
+		return;
+	}
+	int i;
+	for (i = 0; i < points->lastcol - 2; i += 3) {
+		// t, m, b will have values of 0, 1, or 2 to be added to i
+	}
 }
 
 /*======== void add_polygon() ==========
