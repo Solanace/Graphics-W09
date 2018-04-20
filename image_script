@@ -1,0 +1,7 @@
+push
+move
+200 200 0
+sphere
+0 0 0 250
+pop
+display

@@ -19,16 +19,63 @@
 
   Color should be set differently for each polygon.
   ====================*/
-void scanline_convert( struct matrix *points, int i, screen s, zbuffer zb ) {
-	// Assuming entire polygon matrix was carried over
-	// Step 1: Sort top, middle, bottom
-	if (polygons->lastcol < 3) {
+void scanline_convert(struct matrix *points, int i, screen s, zbuffer zbuf ) {
+	if (points->lastcol < 3) {
 		printf("Need at least 3 points to draw a polygon!\n");
 		return;
 	}
-	int i;
-	for (i = 0; i < points->lastcol - 2; i += 3) {
-		// t, m, b will have values of 0, 1, or 2 to be added to i
+	// t, m, b will have values of 0, 1, or 2 to be added to i
+	int b = i, m = i + 1, t = i + 2, temp;
+	if (points->m[1][b] > points->m[1][m]) {
+		temp = b;
+		b = m;
+		m = temp;
+	}
+	if (points->m[1][b] > points->m[1][t]) {
+		temp = b;
+		b = t;
+		t = temp;
+	}
+	if (points->m[1][m] > points->m[1][t]) {
+		temp = m;
+		m = t;
+		t = temp;
+	}
+	
+	color c;
+	double xb, yb, zb, xm, ym, zm, xt, yt, zt;
+	xb = points->m[0][b];
+	yb = points->m[1][b];
+	zb = points->m[2][b];
+	
+	xm = points->m[0][m];
+	ym = points->m[1][m];
+	zm = points->m[2][m];
+	
+	xt = points->m[0][t];
+	yt = points->m[1][t];
+	zt = points->m[2][t];
+	//printf("%d: %0.2f %0.2f %0.2f\n", i, points->m[1][b], points->m[1][m], points->m[1][t]);
+	if (ym != yb && ym != yt) { // Checking for vertical lines
+		double x0 = xb, x1 = xb;
+		int y = yb;
+		c.red = rand() % 255;
+		c.green = rand() % 255;
+		c.blue = rand() % 255;
+		while (y < ym) {
+			draw_line(x0, y, 0, x1, y, 0, s, zbuf, c);
+			x0 += (xt - xb) / (yt - yb);
+			x1 += (xm - xb) / (ym - yb);
+			y ++;
+		}
+		x1 = xm;
+		y = ym;
+		while (y < yt) {
+			draw_line(x0, y, 0, x1, y, 0, s, zbuf, c);
+			x0 += (xt - xb) / (yt - yb);
+			x1 += (xt - xm) / (yt - ym);
+			y ++;
+		}
 	}
 }
 
@@ -103,8 +150,10 @@ void draw_polygons(struct matrix *polygons, screen s, zbuffer zb, color c ) {
                  polygons->m[1][point+2],
                  polygons->m[2][point+2],
                  s, zb, c);
+      scanline_convert(polygons, point, s, zb);
     }
   }
+  print_matrix(polygons);
 }
 
 /*======== void add_box() ==========
