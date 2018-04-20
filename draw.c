@@ -56,24 +56,30 @@ void scanline_convert(struct matrix *points, int i, screen s, zbuffer zbuf ) {
 	yt = points->m[1][t];
 	zt = points->m[2][t];
 	//printf("%d: %0.2f %0.2f %0.2f\n", i, points->m[1][b], points->m[1][m], points->m[1][t]);
-	if (ym != yb && ym != yt) { // Checking for vertical lines
+	if (1) { // Checking for vertical lines
 		double x0 = xb, x1 = xb;
+		double z0 = zb, z1 = zb;
 		int y = yb;
 		c.red = rand() % 255;
 		c.green = rand() % 255;
 		c.blue = rand() % 255;
-		while (y < ym) {
-			draw_line(x0, y, 0, x1, y, 0, s, zbuf, c);
+		while (y <= ym) {
+			draw_line(x0, y, z0, x1, y, z1, s, zbuf, c);
 			x0 += (xt - xb) / (yt - yb);
+			z0 += (zt - zb) / (yt - yb);
 			x1 += (xm - xb) / (ym - yb);
+			z1 += (zm - zb) / (ym - yb);
 			y ++;
 		}
 		x1 = xm;
+		z1 = zm;
 		y = ym;
-		while (y < yt) {
-			draw_line(x0, y, 0, x1, y, 0, s, zbuf, c);
+		while (y <= yt) {
+			draw_line(x0, y, z0, x1, y, z1, s, zbuf, c);
 			x0 += (xt - xb) / (yt - yb);
+			z0 += (zt - zb) / (yt - yb);
 			x1 += (xt - xm) / (yt - ym);
+			z1 += (zt - zm) / (yt - ym);
 			y ++;
 		}
 	}
@@ -153,7 +159,7 @@ void draw_polygons(struct matrix *polygons, screen s, zbuffer zb, color c ) {
       scanline_convert(polygons, point, s, zb);
     }
   }
-  print_matrix(polygons);
+  //print_matrix(polygons);
 }
 
 /*======== void add_box() ==========
@@ -571,7 +577,7 @@ void draw_line(int x0, int y0, double z0,
                screen s, zbuffer zb, color c) {
 
 
-  int x, y, d, A, B;
+  int x, y, z, d, A, B;
   int dy_east, dy_northeast, dx_east, dx_northeast, d_east, d_northeast;
   int loop_start, loop_end;
 
@@ -589,6 +595,7 @@ void draw_line(int x0, int y0, double z0,
 
   x = x0;
   y = y0;
+  z = z0;
   A = 2 * (y1 - y0);
   B = -2 * (x1 - x0);
   int wide = 0;

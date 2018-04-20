@@ -90,7 +90,7 @@ void parse_file ( char * filename,
   c.red = 0;
   c.green = 0;
   c.blue = 0;
-  srand(1);
+  srand(12419531);
 
   if ( strcmp(filename, "stdin") == 0 )
     f = stdin;
