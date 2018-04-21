@@ -85,12 +85,12 @@ void parse_file ( char * filename,
   clear_screen(s);
   clear_zbuffer(zb);
   struct stack * csystems = new_stack();
+  srand(5);
 
   color c;
   c.red = 0;
   c.green = 0;
   c.blue = 0;
-  srand(12419531);
 
   if ( strcmp(filename, "stdin") == 0 )
     f = stdin;
