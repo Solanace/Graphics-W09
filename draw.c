@@ -72,7 +72,7 @@ void scanline_convert(struct matrix *points, int i, screen s, zbuffer zbuf ) {
 			y ++;
 		}
 		x1 = xm;
-		z1 = zm;
+		//z1 = zm;
 		while (y < yt) {
 			draw_line(x0, y, z0, x1, y, z1, s, zbuf, c);
 			x0 += (xt - xb) / (yt - yb);
@@ -133,7 +133,7 @@ void draw_polygons(struct matrix *polygons, screen s, zbuffer zb, color c ) {
     normal = calculate_normal(polygons, point);
 
     if ( normal[2] > 0 ) {
-
+    /*
       draw_line( polygons->m[0][point],
                  polygons->m[1][point],
                  polygons->m[2][point],
@@ -155,6 +155,7 @@ void draw_polygons(struct matrix *polygons, screen s, zbuffer zb, color c ) {
                  polygons->m[1][point+2],
                  polygons->m[2][point+2],
                  s, zb, c);
+      */
       scanline_convert(polygons, point, s, zb);
     }
   }
@@ -659,6 +660,7 @@ void draw_line(int x0, int y0, double z0,
       d+= d_east;
     }
     loop_start++;
+    z += z_slope;
   } //end drawing loop
-  plot( s, zb, c, x1, y1, 0 );
+  plot( s, zb, c, x1, y1, z1 );
 } //end draw_line
