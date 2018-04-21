@@ -72,7 +72,7 @@ void scanline_convert(struct matrix *points, int i, screen s, zbuffer zbuf ) {
 			y ++;
 		}
 		x1 = xm;
-		//z1 = zm;
+		z1 = zm;
 		while (y < yt) {
 			draw_line(x0, y, z0, x1, y, z1, s, zbuf, c);
 			x0 += (xt - xb) / (yt - yb);
