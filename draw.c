@@ -56,31 +56,29 @@ void scanline_convert(struct matrix *points, int i, screen s, zbuffer zbuf ) {
 	yt = points->m[1][t];
 	zt = points->m[2][t];
 	//printf("%d: %0.2f %0.2f %0.2f\n", i, points->m[1][b], points->m[1][m], points->m[1][t]);
-	if (1) { // Checking for vertical lines
-		double x0 = xb, x1 = xb;
-		int y = yb;
-		double z0 = zb, z1 = zb;
-		c.red = rand() % 255;
-		c.green = rand() % 255;
-		c.blue = rand() % 255;
-		while (y < ym) {
-			draw_line(x0, y, z0, x1, y, z1, s, zbuf, c);
-			x0 += (xt - xb) / (yt - yb);
-			z0 += (zt - zb) / (yt - yb);
-			x1 += (xm - xb) / (ym - yb);
-			z1 += (zm - zb) / (ym - yb);
-			y ++;
-		}
-		x1 = xm;
-		z1 = zm;
-		while (y < yt) {
-			draw_line(x0, y, z0, x1, y, z1, s, zbuf, c);
-			x0 += (xt - xb) / (yt - yb);
-			z0 += (zt - zb) / (yt - yb);
-			x1 += (xt - xm) / (yt - ym);
-			z1 += (zt - zm) / (yt - ym);
-			y ++;
-		}
+	double x0 = xb, x1 = xb;
+	int y = yb;
+	double z0 = zb, z1 = zb;
+	c.red = rand() % 255;
+	c.green = rand() % 255;
+	c.blue = rand() % 255;
+	while (y < ym) {
+		draw_line(x0, y, z0, x1, y, z1, s, zbuf, c);
+		x0 += (xt - xb) / (yt - yb);
+		z0 += (zt - zb) / (yt - yb);
+		x1 += (xm - xb) / (ym - yb);
+		z1 += (zm - zb) / (ym - yb);
+		y ++;
+	}
+	x1 = xm;
+	z1 = zm;
+	while (y < yt) {
+		draw_line(x0, y, z0, x1, y, z1, s, zbuf, c);
+		x0 += (xt - xb) / (yt - yb);
+		z0 += (zt - zb) / (yt - yb);
+		x1 += (xt - xm) / (yt - ym);
+		z1 += (zt - zm) / (yt - ym);
+		y ++;
 	}
 }
 
@@ -245,7 +243,7 @@ void add_sphere( struct matrix * edges,
       p3 = (p0+step) % (step * (step-1));
 
       //printf("p0: %d\tp1: %d\tp2: %d\tp3: %d\n", p0, p1, p2, p3);
-      if (longt <= step - 2)
+      if (longt < step - 2)
         add_polygon( edges, points->m[0][p0],
                      points->m[1][p0],
                      points->m[2][p0],
