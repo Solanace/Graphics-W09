@@ -41,7 +41,6 @@ void scanline_convert(struct matrix *points, int i, screen s, zbuffer zbuf ) {
 		m = t;
 		t = temp;
 	}
-	
 	color c;
 	double xb, yb, zb, xm, ym, zm, xt, yt, zt;
 	xb = points->m[0][b];
@@ -57,28 +56,28 @@ void scanline_convert(struct matrix *points, int i, screen s, zbuffer zbuf ) {
 	zt = points->m[2][t];
 	//printf("%d: %0.2f %0.2f %0.2f\n", i, points->m[1][b], points->m[1][m], points->m[1][t]);
 	double x0 = xb, x1 = xb;
-	int y = yb;
+	double y;
 	double z0 = zb, z1 = zb;
 	c.red = rand() % 255;
 	c.green = rand() % 255;
 	c.blue = rand() % 255;
-	while (y < ym) {
+	for (y = yb; y < ym; y ++) {
 		draw_line(x0, y, z0, x1, y, z1, s, zbuf, c);
 		x0 += (xt - xb) / (yt - yb);
 		z0 += (zt - zb) / (yt - yb);
 		x1 += (xm - xb) / (ym - yb);
 		z1 += (zm - zb) / (ym - yb);
-		y ++;
 	}
+	x0 = xb + (ym - yb) * (xt - xb) / (yt - yb);
+	z0 = zb + (ym - yb) * (zt - zb) / (yt - yb);
 	x1 = xm;
 	z1 = zm;
-	while (y < yt) {
+	for (y = ym; y < yt; y ++) {
 		draw_line(x0, y, z0, x1, y, z1, s, zbuf, c);
 		x0 += (xt - xb) / (yt - yb);
 		z0 += (zt - zb) / (yt - yb);
 		x1 += (xt - xm) / (yt - ym);
 		z1 += (zt - zm) / (yt - ym);
-		y ++;
 	}
 }
 
@@ -642,7 +641,7 @@ void draw_line(int x0, int y0, double z0,
 
   while ( loop_start < loop_end ) {
 
-    plot( s, zb, c, x, y, z);
+    plot( s, zb, c, x, y, z );
     if ( (wide && ((A > 0 && d > 0) ||
                    (A < 0 && d < 0)))
          ||
