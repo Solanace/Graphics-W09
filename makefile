@@ -30,5 +30,8 @@ stack.o: stack.c stack.h matrix.h
 run: all
 	./main script
 
+image: all
+	./main image_script
+
 clean:
 	rm main *.o *.png

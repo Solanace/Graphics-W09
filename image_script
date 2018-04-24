@@ -1,5 +1,136 @@
 push
-sphere
-0 0 0 150
-display
+move
+100 400 -100
+rotate
+x 20
+rotate
+y 30
+rotate
+z -10
+# Vertical back
+push
+box
+0 0 0 3 300 3
+move
+18 0 0
+box
+0 0 0 3 300 3
+move
+18 0 0
+box
+0 0 0 3 300 3
+move
+18 0 0
+box
+0 0 0 3 300 3
+move
+18 0 0
+box
+0 0 0 3 300 3
+move
+18 0 0
+box
+0 0 0 3 300 3
+move
+18 0 0
+box
+0 0 0 3 300 3
+move
+18 0 0
+box
+0 0 0 3 300 3
+move
+18 0 0
+box
+0 0 0 3 300 3
+move
+18 0 0
+box
+0 0 0 3 300 3
+move
+18 0 0
+box
+0 0 0 3 300 3
+move
+18 0 0
+box
+0 0 0 3 300 3
+move
+18 0 0
+box
+0 0 0 3 300 3
+move
+18 0 0
+box
+0 0 0 3 300 3
+move
+18 0 0
+box
+0 0 0 3 300 3
+move
+18 0 0
 pop
+# Top
+box
+0 0 100 3 3 100
+move
+18 0 0
+box
+0 0 100 3 3 100
+move
+18 0 0
+box
+0 0 100 3 3 100
+move
+18 0 0
+box
+0 0 100 3 3 100
+move
+18 0 0
+box
+0 0 100 3 3 100
+move
+18 0 0
+box
+0 0 100 3 3 100
+move
+18 0 0
+box
+0 0 100 3 3 100
+move
+18 0 0
+box
+0 0 100 3 3 100
+move
+18 0 0
+box
+0 0 100 3 3 100
+move
+18 0 0
+box
+0 0 100 3 3 100
+move
+18 0 0
+box
+0 0 100 3 3 100
+move
+18 0 0
+box
+0 0 100 3 3 100
+move
+18 0 0
+box
+0 0 100 3 3 100
+move
+18 0 0
+box
+0 0 100 3 3 100
+move
+18 0 0
+box
+0 0 100 3 3 100
+move
+18 0 0
+display
+save
+pic.png
