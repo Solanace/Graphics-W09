@@ -42,7 +42,7 @@ void scanline_convert(struct matrix *points, int i, screen s, zbuffer zbuf ) {
 		t = temp;
 	}
 	color c;
-	double xb, yb, zb, xm, ym, zm, xt, yt, zt;
+	float xb, yb, zb, xm, ym, zm, xt, yt, zt;
 	xb = points->m[0][b];
 	yb = points->m[1][b];
 	zb = points->m[2][b];
@@ -55,9 +55,7 @@ void scanline_convert(struct matrix *points, int i, screen s, zbuffer zbuf ) {
 	yt = points->m[1][t];
 	zt = points->m[2][t];
 	//printf("%d: %0.2f %0.2f %0.2f\n", i, points->m[1][b], points->m[1][m], points->m[1][t]);
-	double x0 = xb, x1 = xb;
-	double y;
-	double z0 = zb, z1 = zb;
+	float x0 = xb, x1 = xb, y, z0 = zb, z1 = zb;
 	c.red = rand() % 255;
 	c.green = rand() % 255;
 	c.blue = rand() % 255;
@@ -68,8 +66,6 @@ void scanline_convert(struct matrix *points, int i, screen s, zbuffer zbuf ) {
 		x1 += (xm - xb) / (ym - yb);
 		z1 += (zm - zb) / (ym - yb);
 	}
-	x0 = xb + (ym - yb) * (xt - xb) / (yt - yb);
-	z0 = zb + (ym - yb) * (zt - zb) / (yt - yb);
 	x1 = xm;
 	z1 = zm;
 	for (y = ym; y < yt; y ++) {
@@ -578,15 +574,17 @@ void draw_line(int x0, int y0, double z0,
   int loop_start, loop_end;
 
   //swap points if going right -> left
-  int xt, yt;
+  int xt, yt, zt;
   if (x0 > x1) {
     xt = x0;
     yt = y0;
+    zt = z0;
     x0 = x1;
     y0 = y1;
     z0 = z1;
     x1 = xt;
     y1 = yt;
+    z1 = zt;
   }
 
   x = x0;
